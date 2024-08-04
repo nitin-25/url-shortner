@@ -1,10 +1,10 @@
 const { timeStamp } = require("console");
-const { url } = require("inspector");
+// { url } = require("inspector");
 const mongoose = require("mongoose");
 const { type } = require("os");
 const { short } = require("webidl-conversions");
 
-const userSchema = new mongoose.schema(
+const userSchema = new mongoose.Schema(
     {
         shortId : {
             type : String,
@@ -22,8 +22,8 @@ const userSchema = new mongoose.schema(
         },
     );
 
-const url = mongoose.model('url',userSchema);
+const URL = mongoose.model('url',userSchema);
 
-module.exports = url;
+module.exports = URL;
 
 
