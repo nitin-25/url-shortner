@@ -3,7 +3,8 @@ require("dotenv").config();
 const express = require("express");
 const {connectToMongoDb} = require("./connection");
 const URL = require("./models/url");
-
+const cookieParser = require("cookie-parser");
+const {restrictToLoggedinUserOnly,checkAuth } = require('./middileware/auth');
 const path = require("path");
 
 const app = express();
@@ -20,13 +21,14 @@ const urlRoutes = require('./routes/url');
 const userRouter = require('./routes/user');
 
 
+
 // Middleware to parse JSON bodies
 app.use(express.json());
 app.use(express.urlencoded({ extended : false}));
-
-app.use('/url', urlRoutes);
+app.use(cookieParser()); 
+app.use('/url', restrictToLoggedinUserOnly, urlRoutes);
 app.use("/user", userRouter);
-app.use("/",staticRoute);
+app.use("/", checkAuth, staticRoute);
 const port = process.env.PORT ||4000;
 
 app.get("/url/:shortId",async(req, res) => {
