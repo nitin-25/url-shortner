@@ -22,9 +22,9 @@ async function handleUserLogin(req, res) {
             error : "Invailid userName or Password"
         })
     }
-    sessionId = uuidv4();
-    setCookie(sessionId, user);
-    res.cookie("uid",sessionId);
+    //sessionId = uuidv4();
+    const token = setCookie(user);
+    res.cookie("uid",token);
     return res.redirect("/");
 }
 
